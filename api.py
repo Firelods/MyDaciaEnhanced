@@ -33,7 +33,7 @@ def get_taches():
 
 
 @app.route('/init_renault_session', methods=['POST'])
-def init_renault_session():
+async def init_renault_session():
     if request.json['login_id'] is None:
         return {"message": "Le login_id n'est pas spécifié"}, 400
     if request.json['password'] is None:
@@ -44,10 +44,10 @@ def init_renault_session():
         client = RenaultClient(websession=websession, locale="fr_FR")
         await client.session.login(login_id, password)
         account_list = (await client.get_person()).accounts
-        account_id=""
+        account_id = ""
         # add every accountID in list
         for account in account_list:
-            if account.type == "MYDACIA":
+            if account.accountType == "MYDACIA":
                 account_id = account.accountId
                 account = await client.get_api_account(account_id)
                 vehicle_list = (await account.get_vehicles()).vehicleLinks
@@ -56,9 +56,12 @@ def init_renault_session():
                 for vehicle in vehicle_list:
                     vin = vehicle.vin
                     vehicle = await account.get_api_vehicle(vin)
-                    vehicle_list_to_return.append(vehicle)
+                    vehicle_details = await vehicle.get_details()
+                    vehicle_list_to_return.append({"model": vehicle_details.model.label, "vin": vin,
+                                                   "licensePlate": vehicle_details.registrationNumber})
                 return {"vehicles": vehicle_list_to_return}
-        return  {"message": "Aucun compte n'a été trouvé"}, 404
+        return {"message": "Aucun compte n'a été trouvé"}, 404
+
 
 # function to plan a task at a specific time just once
 
@@ -79,10 +82,9 @@ def planifier_tache_once():
                 return {"message": "Le mot de passe n'est pas spécifié"}, 400
             if request.json["vin"] is None:
                 return {"message": "Le vin n'est pas spécifié"}, 400
-            scheduler.add_job(launch_charge(login_id=request.json["login_id"], password=["password"]), 'date',
-                              run_date=datetime)
+            # scheduler.add_job(launch_charge(login_id=request.json["login_id"], password=["password"]), 'date',
+            #                   run_date=datetime)
             return {"message": "Tâche planifiée"}
-
 
 
 if __name__ == "__main__":
