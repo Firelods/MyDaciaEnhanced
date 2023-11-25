@@ -1,18 +1,19 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import request
-
+from _datetime import datetime as dt
 from vehicle import charge
 
 scheduler = BackgroundScheduler()
 scheduler.start()
 
 def planifier_charge():
-    datetime = request.json['datetime']  # get datetime from request in JS format
+    datetime = dt.fromisoformat(request.json['datetime'])  # datetime is a iso format string
     heure = datetime.hour
     minute = datetime.minute
     second = datetime.second
+
     token = request.json['token']
-    scheduler.add_job(charge(token), 'cron', hour=heure, minute=minute, second=second)
+    scheduler.add_job(charge, 'cron',args=[token], hour=heure, minute=minute, second=second)
     return {"message": f"Tâche planifiée à {heure} heure(s)"}
 
 

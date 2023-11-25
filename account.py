@@ -14,12 +14,14 @@ def load_key():
     """
     return open("key.key", "rb").read()
 
+
 def save_key(key):
     """
     Saves the key to a file named `key.key` in the current directory.
     """
     with open("key.key", "wb") as key_file:
         key_file.write(key)
+
 
 # Check if key exists
 try:
@@ -31,7 +33,6 @@ except FileNotFoundError:
 
 cipher_suite = Fernet(key)
 SECRET_KEY = "your-secret-key"  # replace with your secret key
-
 
 
 async def init_renault_session():
@@ -71,14 +72,22 @@ async def init_renault_session():
                 print("encrypted_password: ", encrypted_password)
                 # save in postgresql database
                 cursor = postgres_db.cursor()
-                postgres_insert_query = """ INSERT INTO mobile_user (login_id, password) VALUES (%s,%s)"""
-                record_to_insert = (login_id, psycopg2.Binary(encrypted_password))
+                postgres_insert_query = """ INSERT INTO mobile_user (login_id, password,account_id) VALUES (%s,%s,%s)"""
+                record_to_insert = (login_id, psycopg2.Binary(encrypted_password), account_id)
                 cursor.execute(postgres_insert_query, record_to_insert)
                 postgres_db.commit()
                 cursor.close()
                 return {"vehicles": vehicle_list_to_return, "token": token}
         return {"message": "Aucun compte n'a été trouvé"}, 404
 
+
+def get_account_id_from_database(login_id):
+    cursor = postgres_db.cursor()
+    postgres_select_query = """ SELECT account_id FROM mobile_user WHERE login_id = %s"""
+    cursor.execute(postgres_select_query, (login_id,))
+    account_id = cursor.fetchone()[0]
+    cursor.close()
+    return account_id
 
 
 def get_password_from_database(login_id):
@@ -91,7 +100,6 @@ def get_password_from_database(login_id):
     password = cipher_suite.decrypt(encrypted_password).decode()
 
     return password
-
 
 
 def get_login_id_from_token(token):
