@@ -70,3 +70,23 @@ async def charge():
             return {"message": "Charge lancée", "informations": error_message}, 200
         else:
             return {"message": "Erreur lors du lancement de la charge", "informations": error_message}, 400
+
+
+async def get_car_info():
+    token = request.json['token']
+    login_id = get_login_id_from_token(token)
+    password = get_password_from_database(login_id)
+    vin = get_vin_from_database(token)
+    account_id = get_account_id_from_database(login_id)
+    async with aiohttp.ClientSession() as websession:
+        client = RenaultClient(websession=websession, locale="fr_FR")
+        await client.session.login(login_id, password)
+        account = await client.get_api_account(account_id)
+        vehicle = await account.get_api_vehicle(vin)
+        try:
+            cockpit = await vehicle.get_cockpit()
+            battery_status = await vehicle.get_battery_status()
+            hvac_status = await vehicle.
+            return {"cockpit": cockpit, "battery_status": battery_status, "hvac_status": hvac_status}, 200
+        except:
+            return {"message": "Erreur lors de la récupération des informations"}, 400

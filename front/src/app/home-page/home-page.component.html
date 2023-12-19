@@ -1,1 +1,59 @@
-<p>home-page works!</p>
+<img class="logo" src="../../assets/logoLittle.svg" alt="logoDaciaEnhanced" />
+<div class="mainDiv">
+  <button class="nameCar">Spring</button>
+
+  <div class="card">
+    <img class="share" src="../../assets/Share.svg" alt="Share">
+    <div class="header">
+      <div class="refreshStatus">
+        <img src="../../assets/history.svg" alt="history" />
+        <span>{{formatDate(actualCar.lastRefresh).split(" ")[0]}}<i>{{ formatDate(actualCar.lastRefresh).split(" ")[1]
+            }}</i>
+        </span>
+      </div>
+    </div>
+    <div class="batteryInformation">
+      <img class="battery" src="../../assets/battery.png" alt="battery">
+      <svg viewBox="0 0 36 18" class="circular-chart">
+        <linearGradient id="paint" x1="0%" y1="0%" x2="100%" y2="0%" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" style="stop-color:#C68243" />
+          <stop offset="50%" style="stop-color:#A19E43" />
+          <stop offset="75%" style="stop-color:#6DC643" />
+        </linearGradient>
+        <path class="circle-bg" d="M2 18
+        a 16 16 0 0 1 32 0" />
+        <path #circlePath class="circle" d="M2 18
+        a 16 16 0 0 1 32 0" />
+      </svg>
+      <div class="batteryPercentage">
+        <span>{{actualCar.batteryLevel}}%</span>
+        <span>{{actualCar.autonomy}}km</span>
+      </div>
+    </div>
+    <div class="bottomInformations">
+      <div class="bottomInformation">
+        <div class="part airConditioner">
+          <div class="title">
+            <img src="../../assets/aC.svg" alt="airConditioner">
+            <span>A/C</span>
+          </div>
+          <svg (click)="this.actualCar.charging=!this.actualCar.charging" width="60" height="60" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="30" fill="#DFF2FB" />
+            <circle cx="30" cy="30" r="20" [attr.fill]="this.actualCar.charging?'#287D09':'#692323'" />
+            <circle cx="30" cy="30" r="14" fill="#DFF2FB" />
+            <text x="50%" y="57%" text-anchor="middle" fill="this.actualCar.charging?'#287D09':'#692323'"
+              font-size="12px" [textContent]="this.actualCar.charging?'ON':'OFF'"></text>
+          </svg>
+        </div>
+        <div class="part charge">
+          <div class="title">
+            <img src="../../assets/Charge.svg" alt="charge">
+            <span>Charge</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

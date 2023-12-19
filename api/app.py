@@ -23,5 +23,7 @@ app.route('/plan_task_once', methods=['POST'])(planifier_tache_once)
 
 app.route('/set_vin', methods=['POST'])(set_vin)
 
+app.route('/get_car_info', methods=['GET'])()
+
 if __name__ == "__main__":
     app.run(port=5000)

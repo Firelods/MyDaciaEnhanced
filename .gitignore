@@ -5,12 +5,12 @@
 /tmp
 /out-tsc
 /bazel-out
-
+front/.angular/*
 # Node
 front/node_modules
 npm-debug.log
 yarn-error.log
-
+front/dist/*
 .editorconfig
 *.pyc
 asset.py
