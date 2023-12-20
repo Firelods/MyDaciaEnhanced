@@ -37,20 +37,41 @@
             <img src="../../assets/aC.svg" alt="airConditioner">
             <span>A/C</span>
           </div>
-          <svg (click)="this.actualCar.charging=!this.actualCar.charging" width="60" height="60" viewBox="0 0 60 60">
+          <svg [ngClass]="this.actualCar.climate ? 'active':''" (click)="this.actualCar.climate=!this.actualCar.climate"
+            width="60" height="60" viewBox="0 0 60 60">
             <circle cx="30" cy="30" r="30" fill="#DFF2FB" />
-            <circle cx="30" cy="30" r="20" [attr.fill]="this.actualCar.charging?'#287D09':'#692323'" />
+            <circle cx="30" cy="30" r="20" [attr.fill]="this.actualCar.climate?'#287D09':'#692323'" />
             <circle cx="30" cy="30" r="14" fill="#DFF2FB" />
-            <text x="50%" y="57%" text-anchor="middle" fill="this.actualCar.charging?'#287D09':'#692323'"
-              font-size="12px" [textContent]="this.actualCar.charging?'ON':'OFF'"></text>
+            <text x="50%" y="57%" text-anchor="middle" [attr.fill]="this.actualCar.climate?'#287D09':'#692323'"
+              font-size="12px" font-weight="bold" [textContent]="this.actualCar.climate?'ON':'OFF'"></text>
           </svg>
+          <app-scheduler [taskDate]="this.actualCar.scheduled.airConditioning.timestamp"></app-scheduler>
         </div>
         <div class="part charge">
           <div class="title">
             <img src="../../assets/Charge.svg" alt="charge">
             <span>Charge</span>
           </div>
+          <svg [ngClass]="this.actualCar.charging ? 'active':''"
+            (click)="this.actualCar.charging=!this.actualCar.charging" width="60" height="60" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="30" fill="#DFF2FB" />
+            <circle cx="30" cy="30" r="20" [attr.fill]="this.actualCar.charging?'#287D09':'#692323'" />
+            <circle cx="30" cy="30" r="14" fill="#DFF2FB" />
+            <path id="unplug" *ngIf="!this.actualCar.charging"
+              d="M28.1 40.2V37.2L24.6 33.7V28.2C24.6 27.8 24.6917 27.425 24.875 27.075C25.0583 26.725 25.325 26.4583 25.675 26.275L27.6 28.2H26.6V32.85L30.1 36.35V38.2H31.1V36.35L32.025 35.425L20 23.4L21.4 22L39.8 40.4L38.4 41.8L33.45 36.85L33.1 37.2V40.2H28.1ZM35.75 33.5L34.6 32.35V28.2H30.45L26.6 24.35V22.2H28.6V26.2H32.6V22.2H34.6V27.2L33.6 26.2H34.6C35.15 26.2 35.6208 26.3958 36.0125 26.7875C36.4042 27.1792 36.6 27.65 36.6 28.2V32.65L35.75 33.5Z"
+              fill="#692323" />
+            <path id="plug" *ngIf="this.actualCar.charging"
+              d="M29.5 38H30.5V36.15L34 32.65V28H26V32.65L29.5 36.15V38ZM27.5 40V37L24 33.5V28C24 27.45 24.1958 26.9792 24.5875 26.5875C24.9792 26.1958 25.45 26 26 26H27L26 27V22H28V26H32V22H34V27L33 26H34C34.55 26 35.0208 26.1958 35.4125 26.5875C35.8042 26.9792 36 27.45 36 28V33.5L32.5 37V40H27.5Z"
+              fill="#287D09" />
+          </svg>
+          <app-scheduler [taskDate]="this.actualCar.scheduled.charging.timestamp"></app-scheduler>
+
         </div>
+      </div>
+    </div>
+    <div class="footerCard">
+      <div class="totalKilometers">
+        <img src="../../assets/Wheel.svg" alt="wheel"> <span>{{actualCar.totalKilometers}}km</span>
       </div>
     </div>
   </div>

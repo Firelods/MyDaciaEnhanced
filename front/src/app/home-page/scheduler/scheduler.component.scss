@@ -1,0 +1,25 @@
+.customDateInput {
+  display: none;
+}
+
+.rounded {
+  border-radius: 10px;
+  display: flex;
+  width: 80px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  border-radius: 5px;
+  border: 1px solid var(--BackgroundColor, #dff2fb);
+  font-weight: 600;
+
+  .day {
+    font-size: 0.8em;
+  }
+  .time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}

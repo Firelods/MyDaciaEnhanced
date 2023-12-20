@@ -1,3 +1,5 @@
+import { ScheduledTask } from "./scheduled-task";
+
 export interface CarInfo {
   id: number;
   name: string;
@@ -8,4 +10,5 @@ export interface CarInfo {
   lastRefresh: Date;
   totalKilometers: number;
   batteryLevel: number;
+  scheduled: { airConditioning: ScheduledTask, charging: ScheduledTask };
 }

@@ -3,10 +3,11 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { CarInfoService } from '../services/car-info.service';
 import { CarInfo } from '../interfaces/car-info';
+import { SchedulerComponent } from './scheduler/scheduler.component';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, FooterComponent],
+  imports: [CommonModule, FooterComponent, SchedulerComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
