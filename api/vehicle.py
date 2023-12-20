@@ -86,7 +86,8 @@ async def get_car_info():
         try:
             cockpit = await vehicle.get_cockpit()
             battery_status = await vehicle.get_battery_status()
-            hvac_status = await vehicle.
-            return {"cockpit": cockpit, "battery_status": battery_status, "hvac_status": hvac_status}, 200
+            hvac_status = await vehicle.get_hvac_status()
+            details=vehicle.get_details()
+            return {"cockpit": cockpit, "battery_status": battery_status, "hvac_status": hvac_status,"details":details}, 200
         except:
             return {"message": "Erreur lors de la récupération des informations"}, 400

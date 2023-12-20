@@ -3,7 +3,7 @@ from flask import Flask
 
 from account import init_renault_session
 from scheduler import get_taches, planifier_tache_once, planifier_charge
-from vehicle import set_vin, charge
+from vehicle import set_vin, charge, get_car_info
 
 postgres_db = psycopg2.connect(database="postgres",
                                host="localhost",
@@ -23,7 +23,7 @@ app.route('/plan_task_once', methods=['POST'])(planifier_tache_once)
 
 app.route('/set_vin', methods=['POST'])(set_vin)
 
-app.route('/get_car_info', methods=['GET'])()
+app.route('/get_car_info', methods=['GET'])(get_car_info)
 
 if __name__ == "__main__":
     app.run(port=5000)
