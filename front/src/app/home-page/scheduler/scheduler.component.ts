@@ -1,3 +1,4 @@
+import { ScheduledTask } from './../../interfaces/scheduled-task';
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,15 +7,18 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './scheduler.component.html',
-  styleUrl: './scheduler.component.scss'
+  styleUrl: './scheduler.component.scss',
 })
 export class SchedulerComponent {
-  @Input() taskDate!: Date;
+  @Input() scheduledTask!: ScheduledTask;
 
-  constructor() { }
+  constructor() {}
 
   formatDate(date: Date): string {
-    return `${date.getHours()}:${date.getMinutes().toLocaleString('fr-FR', { minimumIntegerDigits: 2, useGrouping: false })}`;
+    return `${date.getHours()}:${date.getMinutes().toLocaleString('fr-FR', {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    })}`;
   }
 
   getDay(date: Date): string {

@@ -19,15 +19,12 @@ import { taskHistory } from '../interfaces/task-history';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
-export class HomePageComponent implements AfterViewInit {
+export class HomePageComponent {
   actualCar!: CarInfo;
   history: taskHistory[] = [];
   percentage = 65;
   @ViewChild('circlePath')
   circlePath!: ElementRef;
-  viewInitialized = new Promise<void>(
-    (resolve) => (this._resolveViewInitialized = resolve)
-  );
 
   private _resolveViewInitialized!: () => void;
   constructor(
@@ -37,13 +34,10 @@ export class HomePageComponent implements AfterViewInit {
   ) {
     this.carInfoService.getCarInfo().subscribe((carInfo) => {
       this.actualCar = carInfo;
-      this.viewInitialized.then(() => this.drawGauge());
+      this.drawGauge();
+      console.log(this.actualCar);
     });
     this.history = this.ActionHistoryService.getHistory();
-  }
-
-  ngAfterViewInit() {
-    this._resolveViewInitialized();
   }
 
   formatDate(date: Date): string {
@@ -54,11 +48,10 @@ export class HomePageComponent implements AfterViewInit {
   }
 
   drawGauge() {
-    // make pourcentage between 0 and 50
-    console.log(this.actualCar);
-    this.actualCar.autonomy = 65;
-    this.percentage = this.actualCar.autonomy / 2;
-    this.circlePath.nativeElement.style.strokeDasharray = `${this.percentage}, 100`;
-    console.log(this.circlePath);
+    let circlePath = document.getElementsByClassName(
+      'circle'
+    )[0] as HTMLElement;
+    this.percentage = this.actualCar.batteryLevel / 2;
+    circlePath!.style.strokeDasharray = `${this.percentage}, 100`;
   }
 }

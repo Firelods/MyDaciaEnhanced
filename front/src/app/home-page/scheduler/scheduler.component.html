@@ -1,8 +1,8 @@
 <div class="rounded">
-  <span class="day">{{getDay(taskDate)}}</span>
+  <span *ngIf="this.scheduledTask" class="day">{{getDay(scheduledTask.timestamp)}}</span>
   <div class="time">
     <img src="../../../assets/Clock.svg" alt="clock">
-    <span class="hour">{{formatDate(taskDate)}}</span>
+    <span *ngIf="this.scheduledTask" class="hour">{{formatDate(scheduledTask.timestamp)}}</span>
   </div>
 </div>
 

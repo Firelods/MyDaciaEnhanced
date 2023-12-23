@@ -45,7 +45,7 @@
             <text x="50%" y="57%" text-anchor="middle" [attr.fill]="this.actualCar.climate?'#287D09':'#692323'"
               font-size="12px" font-weight="bold" [textContent]="this.actualCar.climate?'ON':'OFF'"></text>
           </svg>
-          <app-scheduler [taskDate]="this.actualCar.scheduled.airConditioning.timestamp"></app-scheduler>
+          <app-scheduler [scheduledTask]="this.actualCar.scheduled.airConditioning"></app-scheduler>
         </div>
         <div class="part charge">
           <div class="title">
@@ -64,14 +64,15 @@
               d="M29.5 38H30.5V36.15L34 32.65V28H26V32.65L29.5 36.15V38ZM27.5 40V37L24 33.5V28C24 27.45 24.1958 26.9792 24.5875 26.5875C24.9792 26.1958 25.45 26 26 26H27L26 27V22H28V26H32V22H34V27L33 26H34C34.55 26 35.0208 26.1958 35.4125 26.5875C35.8042 26.9792 36 27.45 36 28V33.5L32.5 37V40H27.5Z"
               fill="#287D09" />
           </svg>
-          <app-scheduler [taskDate]="this.actualCar.scheduled.charging.timestamp"></app-scheduler>
+          <app-scheduler [scheduledTask]="this.actualCar.scheduled.charging"></app-scheduler>
 
         </div>
       </div>
     </div>
     <div class="footerCard">
       <div class="totalKilometers">
-        <img src="../../assets/Wheel.svg" alt="wheel"> <span>{{actualCar.totalKilometers}}km</span>
+        <img src="../../assets/Wheel.svg" alt="wheel">
+        <span>{{actualCar.totalKilometers}}km</span>
       </div>
     </div>
   </div>

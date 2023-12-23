@@ -59,6 +59,9 @@
       .battery {
         width: 35px;
       }
+      .circle {
+        transition: all 400ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+      }
       .batteryPercentage {
         font-size: 1.7em;
         display: flex;
@@ -106,7 +109,7 @@
             margin-bottom: 10%;
             width: 75px;
             height: 75px;
-            circle {
+            .circle {
               transition: all 0.2s ease-in-out;
             }
           }
