@@ -1,16 +1,14 @@
 import asyncio
 import datetime
 import aiohttp
-from flask import request
+from flask import request, g
 from renault_api.kamereon.enums import ChargeState
 from renault_api.renault_client import RenaultClient
 from account import get_login_id_from_token, get_password_from_database, get_account_id_from_database
 from database import postgres_db
 
 
-def set_vin():
-    token = request.json['token']
-    login_id = get_login_id_from_token(token)
+def set_vin(login_id):
     vin = request.json['vin']
     cursor = postgres_db.cursor()
     postgres_update_query = """ UPDATE mobile_user SET vin = %s WHERE login_id = %s"""
@@ -20,10 +18,7 @@ def set_vin():
     return {"message": "VIN enregistré"}, 204
 
 
-def get_vin_from_database(token=""):
-    if token == "":
-        token = request.json['token']
-    login_id = get_login_id_from_token(token)
+def get_vin_from_database(login_id):
     cursor = postgres_db.cursor()
     postgres_select_query = """ SELECT vin FROM mobile_user WHERE login_id = %s"""
     cursor.execute(postgres_select_query, (login_id,))
@@ -33,7 +28,7 @@ def get_vin_from_database(token=""):
 
 
 async def charge():
-    token = request.json['token']
+    token = g.token
     login_id = get_login_id_from_token(token)
     password = get_password_from_database(login_id)
     vin = get_vin_from_database(token)
@@ -72,11 +67,11 @@ async def charge():
             return {"message": "Erreur lors du lancement de la charge", "informations": error_message}, 400
 
 
-async def get_car_info():
-    token = request.json['token']
-    login_id = get_login_id_from_token(token)
+async def get_car_info(login_id):
     password = get_password_from_database(login_id)
-    vin = get_vin_from_database(token)
+    vin = get_vin_from_database(login_id)
+    if vin is None:
+        return {"message": "Aucun véhicule n'est enregistré"}, 400
     account_id = get_account_id_from_database(login_id)
     async with aiohttp.ClientSession() as websession:
         client = RenaultClient(websession=websession, locale="fr_FR")
@@ -87,7 +82,27 @@ async def get_car_info():
             cockpit = await vehicle.get_cockpit()
             battery_status = await vehicle.get_battery_status()
             hvac_status = await vehicle.get_hvac_status()
-            details=vehicle.get_details()
-            return {"cockpit": cockpit, "battery_status": battery_status, "hvac_status": hvac_status,"details":details}, 200
-        except:
-            return {"message": "Erreur lors de la récupération des informations"}, 400
+            details = await vehicle.get_details()
+            # export interface CarInfo {
+            #   name: string;
+            #   autonomy: number;
+            #   imageUrl: string;
+            #   charging: boolean;
+            #   climate: boolean;
+            #   lastRefresh: Date;
+            #   totalKilometers: number;
+            #   batteryLevel: number;
+            #   scheduled: { airConditioning: ScheduledTask, charging: ScheduledTask };
+            # }
+            # return a json like this
+            return {"name": details.model.label, "autonomy": battery_status.batteryAutonomy,
+                    "imageUrl": "https://static.renault.co.uk/cms/version/2021-01/renault-logo-2020.png",
+                    "charging": battery_status.get_charging_status() == ChargeState.CHARGE_IN_PROGRESS,
+                    "climate": hvac_status.hvacStatus == "ON",
+                    "lastRefresh": battery_status.timestamp,
+                    "totalKilometers": cockpit.totalMileage,
+                    "batteryLevel": battery_status.batteryLevel,
+                    }, 200
+        except Exception as e:
+            print(str(e))
+            return {"message": "Erreur lors de la récupération des informations", "erreur": str(e)}, 400

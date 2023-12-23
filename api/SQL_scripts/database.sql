@@ -4,7 +4,7 @@ GRANT ALL PRIVILEGES ON DATABASE myDacia TO postgres;
 
 CREATE TABLE mobile_user (
     login_id varchar PRIMARY KEY,
-    password varchar NOT NULL,
+    password bytea NOT NULL,
     account_id varchar ,
     vin varchar
 );
