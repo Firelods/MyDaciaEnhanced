@@ -5,6 +5,7 @@ from flask import request, g
 from renault_api.kamereon.enums import ChargeState
 from renault_api.renault_client import RenaultClient
 from account import get_login_id_from_token, get_password_from_database, get_account_id_from_database
+from api.scheduler import  scheduler
 from database import postgres_db
 
 
@@ -95,6 +96,14 @@ async def get_car_info(login_id):
             #   scheduled: { airConditioning: ScheduledTask, charging: ScheduledTask };
             # }
             # return a json like this
+            scheduled = {"airConditioning": None, "charging": None}
+            jobs = get_planified_tasks_for_user(login_id)
+            for job in jobs:
+                if job.kwargs["type"] == "charge":
+                    scheduled["charging"] = {"timestamp": job.next_run_time}
+                if job.kwargs["type"] == "airConditioning":
+                    scheduled["airConditioning"] = {"timestamp": job.next_run_time}
+
             return {"name": details.model.label, "autonomy": battery_status.batteryAutonomy,
                     "imageUrl": "https://static.renault.co.uk/cms/version/2021-01/renault-logo-2020.png",
                     "charging": battery_status.get_charging_status() == ChargeState.CHARGE_IN_PROGRESS,
@@ -102,7 +111,16 @@ async def get_car_info(login_id):
                     "lastRefresh": battery_status.timestamp,
                     "totalKilometers": cockpit.totalMileage,
                     "batteryLevel": battery_status.batteryLevel,
+                    "scheduled": scheduled
                     }, 200
         except Exception as e:
             print(str(e))
             return {"message": "Erreur lors de la récupération des informations", "erreur": str(e)}, 400
+
+
+def get_planified_tasks_for_user(login_id):
+    # return all tasks for a use in a json format
+    jobs = scheduler.get_jobs()
+    # filter jobs by login_id
+    jobs = [job for job in jobs if job.kwargs['login_id'] == login_id]
+    return jobs
