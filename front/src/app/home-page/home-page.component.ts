@@ -1,5 +1,5 @@
 import { ActionHistoryService } from './../services/action-history.service';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FooterComponent } from '../footer/footer.component';
 import { CarInfoService } from '../services/car-info.service';
@@ -10,30 +10,40 @@ import { taskHistory } from '../interfaces/task-history';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, FooterComponent, SchedulerComponent, ActionHistoryComponent],
+  imports: [
+    CommonModule,
+    FooterComponent,
+    SchedulerComponent,
+    ActionHistoryComponent,
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent implements AfterViewInit {
-  actualCar: CarInfo;
+  actualCar!: CarInfo;
   history: taskHistory[] = [];
   percentage = 65;
   @ViewChild('circlePath')
   circlePath!: ElementRef;
+  viewInitialized = new Promise<void>(
+    (resolve) => (this._resolveViewInitialized = resolve)
+  );
 
+  private _resolveViewInitialized!: () => void;
   constructor(
     private carInfoService: CarInfoService,
     private datePipe: DatePipe,
     private ActionHistoryService: ActionHistoryService
   ) {
-    this.actualCar = this.carInfoService.getCarInfo();
+    this.carInfoService.getCarInfo().subscribe((carInfo) => {
+      this.actualCar = carInfo;
+      this.viewInitialized.then(() => this.drawGauge());
+    });
     this.history = this.ActionHistoryService.getHistory();
   }
 
-
-
   ngAfterViewInit() {
-    this.drawGauge();
+    this._resolveViewInitialized();
   }
 
   formatDate(date: Date): string {
@@ -45,7 +55,10 @@ export class HomePageComponent implements AfterViewInit {
 
   drawGauge() {
     // make pourcentage between 0 and 50
-    this.percentage = this.percentage / 2;
+    console.log(this.actualCar);
+    this.actualCar.autonomy = 65;
+    this.percentage = this.actualCar.autonomy / 2;
     this.circlePath.nativeElement.style.strokeDasharray = `${this.percentage}, 100`;
+    console.log(this.circlePath);
   }
 }

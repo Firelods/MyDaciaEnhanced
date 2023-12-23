@@ -1,38 +1,16 @@
 import { Injectable } from '@angular/core';
+import { CarInfo } from '../interfaces/car-info';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarInfoService {
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
-
-  getCarInfo() {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    return {
-      id: 1,
-      name: 'Spring',
-      autonomy: 151,
-      imageUrl: 'https://www.tesla.com/sites/default/files/modelsx-new/social/model-s-hero-social.jpg',
-      charging: true,
-      climate: false,
-      lastRefresh: new Date(),
-      totalKilometers: 658,
-      batteryLevel: 65,
-      scheduled: {
-        airConditioning: {
-          timestamp: tomorrow,
-          enabled: true
-        },
-        charging: {
-          timestamp: yesterday,
-          enabled: false
-        }
-      }
-    };
+  getCarInfo(): Observable<CarInfo> {
+    return this.http.get<CarInfo>(environment.baseUrl + '/car_info');
   }
-
 }
