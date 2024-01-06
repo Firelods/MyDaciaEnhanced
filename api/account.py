@@ -1,10 +1,11 @@
 import datetime
+
 import aiohttp
 import jwt
-import psycopg2
 from cryptography.fernet import Fernet
-from flask import request, make_response
+from flask import request
 from renault_api.renault_client import RenaultClient
+
 from database import postgres_db
 
 
@@ -26,11 +27,9 @@ def save_key(key):
 # Check if key exists
 try:
     key = load_key()
-    print("key(loaded): ", key)
 except FileNotFoundError:
     # If not, generate a new key
     key = Fernet.generate_key()
-    print("key(generated): ", key)
     save_key(key)
 
 cipher_suite = Fernet(key)
@@ -79,6 +78,7 @@ async def init_renault_session():
                 try:
                     cursor.execute(postgres_insert_query, record_to_insert)
                 except:
+                    cursor.close()
                     return {"message": "Ce compte existe déjà"}, 400
                 postgres_db.commit()
                 cursor.close()

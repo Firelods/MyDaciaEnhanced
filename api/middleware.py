@@ -8,7 +8,10 @@ from api.database import postgres_db
 
 
 def token_required():
-    token = request.headers.get('Authorization').split(" ")[1]
+    try:
+        token = request.headers.get('Authorization').split(" ")[1]
+    except:
+        raise Exception("Token manquant")
     if token is None:
         raise Exception("Token manquant")
     try:
