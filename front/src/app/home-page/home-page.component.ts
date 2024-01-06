@@ -26,7 +26,6 @@ export class HomePageComponent {
   @ViewChild('circlePath')
   circlePath!: ElementRef;
 
-  private _resolveViewInitialized!: () => void;
   constructor(
     private carInfoService: CarInfoService,
     private datePipe: DatePipe,
@@ -35,7 +34,12 @@ export class HomePageComponent {
     this.carInfoService.getCarInfo().subscribe((carInfo) => {
       this.actualCar = carInfo;
       this.drawGauge();
-      console.log(this.actualCar);
+      this.actualCar.history.forEach((history) => {
+        history.created_at = new Date(history.created_at);
+      });
+      this.actualCar.scheduled.airConditioning = {
+        type: 'airConditioning',
+      };
     });
     this.history = this.ActionHistoryService.getHistory();
   }

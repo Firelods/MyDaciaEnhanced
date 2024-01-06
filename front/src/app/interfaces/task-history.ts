@@ -1,6 +1,6 @@
 export interface taskHistory {
-  timestamp: Date;
-  task: string;
-  type: string;
+  created_at: Date;
+  action: string;
+  informations: string;
   success: boolean;
 }

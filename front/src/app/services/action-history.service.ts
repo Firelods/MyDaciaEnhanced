@@ -2,53 +2,50 @@ import { Injectable } from '@angular/core';
 import { taskHistory } from '../interfaces/task-history';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ActionHistoryService {
-
-  constructor() { }
+  constructor() {}
 
   getHistory(): taskHistory[] {
     // return mock (charge or a/c on)
     return [
       {
-        timestamp: new Date(),
-        task: 'Charge',
+        created_at: new Date(),
+        action: 'Charge',
         success: true,
-        type: 'charge'
+        informations: 'charge',
       },
       {
-        timestamp: new Date(),
-        task: 'A/C',
+        created_at: new Date(),
+        action: 'A/C',
         success: false,
-        type: 'ac'
+        informations: 'ac',
       },
       {
-        timestamp: new Date(),
-        task: 'Charge',
+        created_at: new Date(),
+        action: 'Charge',
         success: false,
-        type: 'charge'
+        informations: 'charge',
       },
       {
-        timestamp: new Date(),
-        task: 'A/C',
+        created_at: new Date(),
+        action: 'A/C',
         success: false,
-        type: 'ac'
+        informations: 'ac',
       },
       {
-        timestamp: new Date(),
-        task: 'Charge',
+        created_at: new Date(),
+        action: 'Charge',
         success: true,
-        type: 'charge'
+        informations: 'charge',
       },
       {
-        timestamp: new Date(),
-        task: 'A/C',
+        created_at: new Date(),
+        action: 'A/C',
         success: true,
-        type: 'ac'
+        informations: 'ac',
       },
-
-    ]
-
+    ];
   }
 }

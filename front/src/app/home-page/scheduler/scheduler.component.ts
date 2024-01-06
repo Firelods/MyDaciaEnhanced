@@ -1,6 +1,13 @@
 import { ScheduledTask } from './../../interfaces/scheduled-task';
-import { Component, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SchedulerService } from '../../services/scheduler.service';
 
 @Component({
   selector: 'app-scheduler',
@@ -9,16 +16,34 @@ import { CommonModule } from '@angular/common';
   templateUrl: './scheduler.component.html',
   styleUrl: './scheduler.component.scss',
 })
-export class SchedulerComponent {
-  @Input() scheduledTask!: ScheduledTask;
+export class SchedulerComponent implements AfterViewInit {
+  @Input() scheduledTask!: ScheduledTask | null;
+  @ViewChild('inputScheduleDate') inputScheduleDate!: ElementRef;
+  @ViewChild('inputScheduleTime') inputScheduleTime!: ElementRef;
 
-  constructor() {}
+  constructor(private scheduler: SchedulerService) {}
+
+  ngAfterViewInit(): void {
+    this.inputScheduleDate.nativeElement.min = new Date()
+      .toISOString()
+      .split('T')[0];
+    this.inputScheduleDate.nativeElement.click();
+  }
 
   formatDate(date: Date): string {
     return `${date.getHours()}:${date.getMinutes().toLocaleString('fr-FR', {
       minimumIntegerDigits: 2,
       useGrouping: false,
     })}`;
+  }
+
+  onDateChange($event: Event) {
+    setTimeout(() => {
+      this.inputScheduleTime.nativeElement.click();
+    }, 200);
+  }
+  onTimeChange($event: Event) {
+    this.scheduleTask();
   }
 
   getDay(date: Date): string {
@@ -36,6 +61,33 @@ export class SchedulerComponent {
       return 'Demain';
     } else {
       return date.toDateString();
+    }
+  }
+
+  activateInput(): void {
+    this.inputScheduleDate.nativeElement.click();
+  }
+
+  scheduleTask(): void {
+    if (this.scheduledTask) {
+      console.log(this.scheduledTask);
+
+      if (this.scheduledTask.type == 'charge') {
+        // build datetime from date and time inputs
+        let datetime = new Date(
+          this.inputScheduleDate.nativeElement.value +
+            'T' +
+            this.inputScheduleTime.nativeElement.value
+        );
+        this.scheduler.scheduleCharge(datetime).subscribe((res) => {
+          // TODO: make notification
+          this.scheduledTask!.timestamp = datetime;
+        });
+      } else if (this.scheduledTask.type == 'ac') {
+        this.scheduler.scheduleAC(
+          new Date(this.inputScheduleTime.nativeElement.value)
+        );
+      }
     }
   }
 }

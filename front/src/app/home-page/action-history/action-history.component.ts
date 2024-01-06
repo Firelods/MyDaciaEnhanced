@@ -7,13 +7,20 @@ import { taskHistory } from '../../interfaces/task-history';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './action-history.component.html',
-  styleUrl: './action-history.component.scss'
+  styleUrl: './action-history.component.scss',
 })
 export class ActionHistoryComponent {
   @Input() history: taskHistory[] = [];
-
+  constructor() {
+    console.log(this.history);
+  }
   formatHour(date: Date): string {
-    return `${date.getHours()}:${date.getMinutes().toLocaleString('fr-FR', { minimumIntegerDigits: 2, useGrouping: false })}`;
+    return `${date.getHours()}:${date
+      .getMinutes()
+      .toLocaleString('fr-FR', {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })}`;
   }
   formatDate(date: Date): string {
     return `${date.getDate()}/${date.getMonth() + 1}`;

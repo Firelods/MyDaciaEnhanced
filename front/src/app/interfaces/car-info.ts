@@ -1,3 +1,4 @@
+import { taskHistory } from './task-history';
 import { ScheduledTask } from './scheduled-task';
 
 export interface CarInfo {
@@ -9,5 +10,9 @@ export interface CarInfo {
   lastRefresh: Date;
   totalKilometers: number;
   batteryLevel: number;
-  scheduled: { airConditioning: ScheduledTask; charging: ScheduledTask };
+  scheduled: {
+    airConditioning: ScheduledTask;
+    charging: ScheduledTask;
+  };
+  history: taskHistory[];
 }
