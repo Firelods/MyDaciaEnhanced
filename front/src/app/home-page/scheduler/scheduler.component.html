@@ -1,11 +1,14 @@
 <div class="rounded" (click)="activateInput()">
-  <span *ngIf="this.scheduledTask && scheduledTask.timestamp " class="day">{{getDay(scheduledTask.timestamp)}}</span>
+  @if (this.scheduledTask && scheduledTask.timestamp ) {
+    <span class="day">{{getDay(scheduledTask.timestamp)}}</span>
+  }
   <div class="time">
     <img src="../../../assets/Clock.svg" alt="clock">
-    <span *ngIf="this.scheduledTask && scheduledTask.timestamp "
+    @if (this.scheduledTask && scheduledTask.timestamp ) {
+      <span
       class="hour">{{formatDate(scheduledTask.timestamp)}}</span>
+    }
   </div>
 </div>
-
 <input #inputScheduleDate (change)="onDateChange($event)" type="date" class="customDateInput">
 <input #inputScheduleTime (change)="onTimeChange($event)" type="time" class="customDateInput">

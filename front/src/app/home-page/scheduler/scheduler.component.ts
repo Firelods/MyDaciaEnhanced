@@ -6,13 +6,13 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { SchedulerService } from '../../services/scheduler.service';
 
 @Component({
   selector: 'app-scheduler',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './scheduler.component.html',
   styleUrl: './scheduler.component.scss',
 })

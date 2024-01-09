@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { taskHistory } from '../../interfaces/task-history';
 
 @Component({
   selector: 'app-action-history',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './action-history.component.html',
   styleUrl: './action-history.component.scss',
 })

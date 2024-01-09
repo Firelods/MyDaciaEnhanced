@@ -1,14 +1,24 @@
 <div class="history">
   <h3>Historique des actions</h3>
   <ul>
-    <li *ngFor="let action of history">
-      <img *ngIf="action.action=='ac'" class="logoContext" src="../../../assets/aC.svg" alt="electric pump">
-      <img *ngIf="action.action=='charge'" class="logoContext" src="../../../assets/Charge.svg" alt="electric pump">
-      <span class="date">{{formatDate(action.created_at)}}</span>
-      <span class="time">{{formatHour(action.created_at)}}</span>
-      <div class="title">{{action.action}}</div>
-      <img *ngIf="!action.success" src="../../../assets/Failed.svg" alt="Failed">
-      <img *ngIf="action.success" src="../../../assets/Success.svg" alt="Success">
-    </li>
+    @for (action of history; track action) {
+      <li>
+        @if (action.action=='ac') {
+          <img class="logoContext" src="../../../assets/aC.svg" alt="electric pump">
+        }
+        @if (action.action=='charge') {
+          <img class="logoContext" src="../../../assets/Charge.svg" alt="electric pump">
+        }
+        <span class="date">{{formatDate(action.created_at)}}</span>
+        <span class="time">{{formatHour(action.created_at)}}</span>
+        <div class="title">{{action.action}}</div>
+        @if (!action.success) {
+          <img src="../../../assets/Failed.svg" alt="Failed">
+        }
+        @if (action.success) {
+          <img src="../../../assets/Success.svg" alt="Success">
+        }
+      </li>
+    }
   </ul>
 </div>

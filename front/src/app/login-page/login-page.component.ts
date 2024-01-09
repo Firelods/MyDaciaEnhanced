@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FooterComponent } from '../footer/footer.component';
 import {
   FormControl,
@@ -12,7 +12,7 @@ import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, FooterComponent, FormsModule, ReactiveFormsModule],
+  imports: [FooterComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
 })
