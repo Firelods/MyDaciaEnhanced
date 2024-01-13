@@ -70,6 +70,45 @@ async def charge(login_id):
             return {"message": "Erreur lors du lancement de la charge", "informations": error_message}, 400
 
 
+async def ac(login_id):
+    password = get_password_from_database(login_id)
+    vin = get_vin_from_database(login_id)
+    account_id = get_account_id_from_database(login_id)
+    logging.info("Starting air conditioning for user %s", login_id)
+    async with aiohttp.ClientSession() as websession:
+        client = RenaultClient(websession=websession, locale="fr_FR")
+        await client.session.login(login_id, password)
+        account = await client.get_api_account(account_id)
+        vehicle = await account.get_api_vehicle(vin)
+        logging.info("Vehicle to start air conditioning retrieved: %s", vehicle)
+        try:
+            ac_start = await vehicle.set_ac_start(20.0)  # temp is given but not used
+            logging.info("Air conditioning started: %s", ac_start)
+        except:
+            logging.error("Error while starting air conditioning")
+            return {"message": "Erreur lors du lancement de la climatisation"}, 400
+        # wait 10 seconds for the air conditioning to start
+        success = True
+        error_message = ""
+        cursor = postgres_db.cursor()
+        postgres_insert_query = """ INSERT INTO logs_actions(action,created_at,success,login_id,informations) 
+                                    VALUES (%s,%s,%s,%s,%s)"""
+        record_to_insert = ("air_conditioning", datetime.now(), success, login_id, error_message)
+        try:
+            cursor.execute(postgres_insert_query, record_to_insert)
+            logging.info("Action saved in database")
+        except:
+            cursor.close()
+            logging.error("Error while saving action in database")
+            return {"message": "Erreur lors de l'enregistrement de l'action"}, 400
+        postgres_db.commit()
+        cursor.close()
+        if success:
+            return {"message": "Climatisation lancée", "informations": error_message}, 200
+        else:
+            return {"message": "Erreur lors du lancement de la climatisation", "informations": error_message}, 400
+
+
 async def get_car_info(login_id, scheduler):
     password = get_password_from_database(login_id)
     vin = get_vin_from_database(login_id)
@@ -107,6 +146,14 @@ def sync_charge(login_id):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     result = loop.run_until_complete(charge(login_id))
+    loop.close()
+    return result
+
+
+def air_conditioning(login_id):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    result = loop.run_until_complete(ac(login_id))
     loop.close()
     return result
 

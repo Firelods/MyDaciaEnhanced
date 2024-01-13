@@ -1,7 +1,7 @@
 from account import init_renault_session, login
 from api.middleware import token_required
 from api.scheduler import planifier_charge, get_planified_tasks_for_user
-from vehicle import set_vin, charge, get_car_info, sync_charge, get_past_tasks_for_user
+from vehicle import set_vin, charge, get_car_info, sync_charge, get_past_tasks_for_user, air_conditioning
 
 
 def set_up_routes(app, scheduler):
@@ -11,7 +11,15 @@ def set_up_routes(app, scheduler):
             login_id = token_required()
         except Exception as e:
             return {"message": str(e)}, 400
-        return planifier_charge(login_id, scheduler,sync_charge)
+        return planifier_charge(login_id, scheduler, sync_charge)
+
+    @app.route('/plan_ac', methods=['POST'])
+    def plan_ac():
+        try:
+            login_id = token_required()
+        except Exception as e:
+            return {"message": str(e)}, 400
+        return planifier_charge(login_id, scheduler, air_conditioning)
 
     @app.route('/charge', methods=['POST'])
     def charge_route():
@@ -51,7 +59,7 @@ def set_up_routes(app, scheduler):
             login_id = token_required()
         except Exception as e:
             return {"message": str(e)}, 400
-        return await get_car_info(login_id,scheduler)
+        return await get_car_info(login_id, scheduler)
 
     @app.route('/get_past_tasks', methods=['GET'])
     def get_past_tasks_route():
