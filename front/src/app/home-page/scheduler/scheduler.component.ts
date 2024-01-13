@@ -8,16 +8,18 @@ import {
 } from '@angular/core';
 
 import { SchedulerService } from '../../services/scheduler.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-scheduler',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './scheduler.component.html',
   styleUrl: './scheduler.component.scss',
 })
 export class SchedulerComponent implements AfterViewInit {
-  @Input() scheduledTask!: ScheduledTask | null;
+  @Input() scheduledTask!: ScheduledTask;
+  @Input() type!: string;
   @ViewChild('inputScheduleDate') inputScheduleDate!: ElementRef;
   @ViewChild('inputScheduleTime') inputScheduleTime!: ElementRef;
 
@@ -69,25 +71,23 @@ export class SchedulerComponent implements AfterViewInit {
   }
 
   scheduleTask(): void {
-    if (this.scheduledTask) {
-      console.log(this.scheduledTask);
+    console.log(this.scheduledTask);
 
-      if (this.scheduledTask.type == 'charge') {
-        // build datetime from date and time inputs
-        let datetime = new Date(
-          this.inputScheduleDate.nativeElement.value +
-            'T' +
-            this.inputScheduleTime.nativeElement.value
-        );
-        this.scheduler.scheduleCharge(datetime).subscribe((res) => {
-          // TODO: make notification
-          this.scheduledTask!.timestamp = datetime;
-        });
-      } else if (this.scheduledTask.type == 'ac') {
-        this.scheduler.scheduleAC(
-          new Date(this.inputScheduleTime.nativeElement.value)
-        );
-      }
+    if (this.type == 'charge') {
+      // build datetime from date and time inputs
+      let datetime = new Date(
+        this.inputScheduleDate.nativeElement.value +
+          'T' +
+          this.inputScheduleTime.nativeElement.value
+      );
+      this.scheduler.scheduleCharge(datetime).subscribe((res) => {
+        // TODO: make notification
+        this.scheduledTask!.timestamp = datetime;
+      });
+    } else if (this.scheduledTask.type == 'ac') {
+      this.scheduler.scheduleAC(
+        new Date(this.inputScheduleTime.nativeElement.value)
+      );
     }
   }
 }

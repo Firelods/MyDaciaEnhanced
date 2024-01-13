@@ -1,12 +1,11 @@
-<div class="rounded" (click)="activateInput()">
+<div class="rounded" [ngClass]="scheduledTask.timestamp ? 'active' : 'not-active'" (click)="activateInput()">
   @if (this.scheduledTask && scheduledTask.timestamp ) {
-    <span class="day">{{getDay(scheduledTask.timestamp)}}</span>
+  <span class="day">{{getDay(scheduledTask.timestamp)}}</span>
   }
   <div class="time">
     <img src="../../../assets/Clock.svg" alt="clock">
     @if (this.scheduledTask && scheduledTask.timestamp ) {
-      <span
-      class="hour">{{formatDate(scheduledTask.timestamp)}}</span>
+    <span class="hour">{{formatDate(scheduledTask.timestamp)}}</span>
     }
   </div>
 </div>

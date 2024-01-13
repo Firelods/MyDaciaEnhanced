@@ -37,9 +37,17 @@ export class HomePageComponent {
       this.actualCar.history.forEach((history) => {
         history.created_at = new Date(history.created_at);
       });
-      this.actualCar.scheduled.airConditioning = {
-        type: 'airConditioning',
-      };
+      if (this.actualCar.scheduled.airConditioning.timestamp) {
+        this.actualCar.scheduled.airConditioning!.timestamp = new Date(
+          this.actualCar.scheduled.airConditioning.timestamp
+        );
+      }
+      if (this.actualCar.scheduled.charging.timestamp) {
+        this.actualCar.scheduled.charging.timestamp = new Date(
+          this.actualCar.scheduled.charging.timestamp
+        );
+      }
+      console.log(this.actualCar);
     });
     this.history = this.ActionHistoryService.getHistory();
   }
