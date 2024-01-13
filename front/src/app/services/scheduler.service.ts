@@ -18,7 +18,12 @@ export class SchedulerService {
     );
   }
 
-  scheduleAC(arg0: Date) {
-    throw new Error('Method not implemented.');
+  scheduleAC(datetime: Date) {
+    return this.http.post<{ message: string }>(
+      environment.baseUrl + '/plan_ac',
+      {
+        datetime: datetime.toISOString().replace('Z', '+00:00'),
+      }
+    );
   }
 }
