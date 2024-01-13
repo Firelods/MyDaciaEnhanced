@@ -86,13 +86,7 @@ async def get_car_info(login_id, scheduler):
             battery_status = await vehicle.get_battery_status()
             hvac_status = await vehicle.get_hvac_status()
             details = await vehicle.get_details()
-            scheduled = {"airConditioning": None, "charging": None}
-            jobs = get_planified_tasks_for_user(login_id, scheduler)
-            for job in jobs:
-                if job.kwargs["type"] == "charge":
-                    scheduled["charging"] = {"timestamp": job.next_run_time}
-                if job.kwargs["type"] == "airConditioning":
-                    scheduled["airConditioning"] = {"timestamp": job.next_run_time}
+            scheduled = get_planified_tasks_for_user(login_id, scheduler)
 
             return {"name": details.model.label, "autonomy": battery_status.batteryAutonomy,
                     "imageUrl": "https://static.renault.co.uk/cms/version/2021-01/renault-logo-2020.png",

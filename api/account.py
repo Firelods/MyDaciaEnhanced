@@ -79,6 +79,7 @@ async def init_renault_session():
                     cursor.execute(postgres_insert_query, record_to_insert)
                 except:
                     cursor.close()
+                    postgres_db.rollback()
                     return {"message": "Ce compte existe déjà"}, 400
                 postgres_db.commit()
                 cursor.close()

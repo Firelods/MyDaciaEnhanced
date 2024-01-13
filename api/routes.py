@@ -22,14 +22,6 @@ def set_up_routes(app, scheduler):
         return charge(login_id)
 
     @app.route('/get_taches', methods=['GET'])
-    def get_taches_route():
-        if not scheduler.running:
-            return {"error": "Scheduler is not running"}, 500
-        jobs = scheduler.get_jobs()
-        scheduler.print_jobs()
-        return {"jobs": str(jobs)}, 200
-
-    @app.route('/get_taches', methods=['GET'])
     def get_taches_for_user_route():
         try:
             login_id = token_required()
