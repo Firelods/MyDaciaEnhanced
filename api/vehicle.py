@@ -16,7 +16,12 @@ def set_vin(login_id):
     vin = request.json['vin']
     cursor = postgres_db.cursor()
     postgres_update_query = """ UPDATE mobile_user SET vin = %s WHERE login_id = %s"""
-    cursor.execute(postgres_update_query, (vin, login_id))
+    try:
+        cursor.execute(postgres_update_query, (vin, login_id))
+    except:
+        cursor.close()
+        postgres_db.rollback()
+        return {"message": "Erreur lors de l'enregistrement du VIN"}, 400
     postgres_db.commit()
     cursor.close()
     return {"message": "VIN enregistré"}, 204
@@ -61,6 +66,7 @@ async def charge(login_id):
         except:
             cursor.close()
             logging.error("Error while saving action in database")
+            postgres_db.rollback()
             return {"message": "Erreur lors de l'enregistrement de l'action"}, 400
         postgres_db.commit()
         cursor.close()
@@ -100,6 +106,7 @@ async def ac(login_id):
         except:
             cursor.close()
             logging.error("Error while saving action in database")
+            postgres_db.rollback()
             return {"message": "Erreur lors de l'enregistrement de l'action"}, 400
         postgres_db.commit()
         cursor.close()
