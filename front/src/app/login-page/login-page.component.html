@@ -1,0 +1,14 @@
+<div class="mainDiv">
+  <img class="logo" src="../../assets/logoLittle.svg" alt="logo">
+
+  <form [formGroup]="form" (submit)="submit()">
+    <input formControlName="email" type="email" name="mailUser" id="mailUser">
+    <input formControlName="password" type="password" name="passwordUser" id="passwordUser">
+    <button type="submit">Connexion</button>
+  </form>
+  <div class="newUser">
+    <span>Nouvel utilisateur ?</span>
+    <button>Inscription</button>
+  </div>
+</div>
+<app-footer></app-footer>

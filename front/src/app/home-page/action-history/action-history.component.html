@@ -1,0 +1,24 @@
+<div class="history">
+  <h3>Historique des actions</h3>
+  <ul>
+    @for (action of history; track action) {
+      <li>
+        @if (action.action=='ac') {
+          <img class="logoContext" src="../../../assets/aC.svg" alt="electric pump">
+        }
+        @if (action.action=='charge') {
+          <img class="logoContext" src="../../../assets/Charge.svg" alt="electric pump">
+        }
+        <span class="date">{{formatDate(action.created_at)}}</span>
+        <span class="time">{{formatHour(action.created_at)}}</span>
+        <div class="title">{{action.action}}</div>
+        @if (!action.success) {
+          <img src="../../../assets/Failed.svg" alt="Failed">
+        }
+        @if (action.success) {
+          <img src="../../../assets/Success.svg" alt="Success">
+        }
+      </li>
+    }
+  </ul>
+</div>

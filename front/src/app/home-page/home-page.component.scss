@@ -1,0 +1,175 @@
+.logo {
+  position: absolute;
+  top: 2%;
+  left: 4%;
+}
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .nameCar {
+    margin-top: 15%;
+    width: 60%;
+    border-radius: 15px;
+    padding: 0.2em 0em;
+    background: var(--card-color);
+    color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-family: "Segoe UI";
+    border: none;
+  }
+
+  .card {
+    position: relative;
+    margin-top: 10%;
+    padding: 0.5em;
+    width: 80%;
+    // height: 400px;
+    background: var(--card-color);
+    border-radius: 5px;
+    color: var(--background-color);
+    font-family: IBM Plex Mono;
+
+    .share {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 8%;
+    }
+    .refreshStatus {
+      width: 30%;
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      align-items: center;
+      span {
+        font-weight: 600;
+        i {
+          font-size: 0.7em;
+        }
+      }
+    }
+    .batteryInformation {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      .battery {
+        width: 35px;
+      }
+      .circle {
+        transition: all 400ms cubic-bezier(0.47, 1.64, 0.41, 0.8);
+      }
+      .batteryPercentage {
+        font-size: 1.7em;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 20px;
+        span:nth-child(2) {
+          font-weight: 600;
+        }
+      }
+    }
+    .bottomInformations {
+      margin-top: 10%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .bottomInformation {
+        width: 90%;
+        border-top: 2px solid var(--background-color);
+        display: flex;
+
+        .part {
+          &:nth-child(1) {
+            border-right: 2px solid var(--background-color);
+          }
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          .title {
+            display: flex;
+            gap: 5px;
+            font-weight: 600;
+            font-size: 1.4em;
+          }
+          svg {
+            &.active {
+              animation: activeButton 1s ease-in-out infinite alternate;
+            }
+            margin-top: 10%;
+            margin-bottom: 10%;
+            width: 75px;
+            height: 75px;
+            .circle {
+              transition: all 0.2s ease-in-out;
+            }
+          }
+          app-scheduler {
+            margin-bottom: 10%;
+          }
+        }
+      }
+    }
+    .footerCard {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0.5em 1em;
+      .totalKilometers {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        span {
+          font-size: 1.2em;
+          font-weight: 600;
+        }
+      }
+    }
+    box-shadow: 5px 5px 16.5px 7px rgba(35, 77, 105, 0.49);
+  }
+}
+
+@keyframes activeButton {
+  0% {
+    filter: drop-shadow(0px 0px 20px #47e310);
+  }
+  100% {
+    filter: drop-shadow(0px 0px 10px #47e310);
+  }
+}
+
+.circular-chart {
+  display: block;
+  margin: 10px auto;
+  max-width: 80%;
+  max-height: 250px;
+}
+
+.circle {
+  fill: none;
+  stroke: url(#paint);
+  stroke-width: 3.8;
+  stroke-dasharray: 0, 100;
+  stroke-linecap: round;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: var(--background-color);
+  stroke-width: 3.8;
+}
+app-action-history {
+  margin-bottom: 30%;
+}

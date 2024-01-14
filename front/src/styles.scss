@@ -1,7 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
-:root{
-  --background-color:#DFF2FB;
-  --card-color:#234D69;
-  --active-color:#287D09;
-  --button-color:#41A2B7;
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap");
+:root {
+  --background-color: #dff2fb;
+  --card-color: #234d69;
+  --active-color: #287d09;
+  --button-color: #41a2b7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: url(./assets/font/Segoe\ UI.ttf);
 }
