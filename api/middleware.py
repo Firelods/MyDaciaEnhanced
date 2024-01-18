@@ -1,10 +1,8 @@
-from functools import wraps
 
 import jwt
-from flask import request, g
+from flask import request
 
-from api.account import SECRET_KEY, cipher_suite
-from api.database import postgres_db
+from account import SECRET_KEY
 
 
 def token_required():

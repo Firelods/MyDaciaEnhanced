@@ -1,0 +1,228 @@
+openapi: 3.0.0
+info:
+  title: MyDaciaEnhanced API
+  version: 1.0.0
+  description: API for managing charges and tasks for electric vehicles.
+paths:
+  /plan_charge:
+    post:
+      summary: Plan a charge for the vehicle.
+      description: Schedules a charging task for an electric vehicle.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datetime:
+                  type: string
+                  format: date-time
+                  description: The date and time for the planned charge in ISO format.
+              required:
+                - datetime
+      responses:
+        200:
+          description: Charge planned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: Invalid request or authentication error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /plan_ac:
+    post:
+      summary: Plan air conditioning for the vehicle.
+      description: Schedules an air conditioning task for an electric vehicle.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datetime:
+                  type: string
+                  format: date-time
+                  description: The date and time for the planned air conditioning in ISO format.
+              required:
+                - datetime
+      responses:
+        200:
+          description: Air conditioning planned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: Invalid request or authentication error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /charge:
+    post:
+      summary: Initiate charging for the vehicle.
+      description: Starts the charging process for an electric vehicle.
+      responses:
+        200:
+          description: Charging process initiated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: Invalid request or authentication error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /get_taches:
+    get:
+      summary: Retrieve scheduled tasks for a user.
+      description: Gets a list of scheduled charging and air conditioning tasks for a user.
+      responses:
+        200:
+          description: List of scheduled tasks retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    task_id:
+                      type: string
+                      description: Unique identifier of the task.
+                    datetime:
+                      type: string
+                      format: date-time
+                      description: Scheduled date and time of the task.
+                    type:
+                      type: string
+                      description: Type of the task (e.g., charge, air conditioning).
+        400:
+          description: Invalid request or authentication error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /login:
+    post:
+      summary: User login.
+      description: Handles user authentication for the API.
+      responses:
+        200:
+          description: Login successful.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Authentication token.
+        400:
+          description: Invalid login credentials.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /set_vin:
+    post:
+      summary: Set the VIN for the vehicle.
+      description: Sets or updates the VIN (Vehicle Identification Number) for a user's electric vehicle.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vin:
+                  type: string
+                  description: The Vehicle Identification Number to be set.
+              required:
+                - vin
+      responses:
+        200:
+          description: VIN set successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        400:
+          description: Invalid request or authentication error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /get_past_tasks:
+    get:
+      summary: Retrieve past tasks for the vehicle.
+      description: Gets a list of past scheduled tasks for a user's electric vehicle.
+      responses:
+        200:
+          description: List of past tasks retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    task_id:
+                      type: string
+                      description: The unique identifier of the task.
+                    task_datetime:
+                      type: string
+                      format: date-time
+                      description: The date and time when the task was scheduled.
+        400:
+          description: Invalid request or authentication error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

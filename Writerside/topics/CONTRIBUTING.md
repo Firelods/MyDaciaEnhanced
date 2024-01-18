@@ -31,8 +31,6 @@ Unsure where to begin contributing to MyDaciaEnhanced? Start by looking through 
 - Limit the first line to 72 characters or less.
 - Reference issues and pull requests liberally after the first line.
 
-### Coding Standards
-(Here you can specify coding standards for your project, such as indentation, variable naming conventions, etc.)
 
 
 Thank you for contributing to MyDaciaEnhanced!

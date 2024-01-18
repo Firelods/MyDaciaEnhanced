@@ -1,0 +1,25 @@
+version: '3.10'
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - ./SQL_scripts/database.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: mydacia
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test123
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    volumes:
+      - ./:/code
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_APP: app.py
+      FLASK_RUN_HOST: 0.0.0.0
+    depends_on:
+      - db
+    command: ["./wait-for-db.sh", "db", "flask run"]

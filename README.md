@@ -36,13 +36,27 @@ A step by step series of examples that tell you how to get a development environ
 2. Navigate to the project directory: `cd MyDaciaEnhanced`
 3. Install dependencies:
    - Front-end: `cd front && npm install`
-   - Back-end: TODO
+   - Back-end: `docker compose pull`
 
 ### Running
-Explain how to run the automated tests for this system and how to start the application.
 
-## Usage
-Briefly explain how to use the application, with examples if applicable.
+#### Front-End
+1. Navigate to the front-end directory: `cd front`
+2. Run the application: `ng serve`
+3. Navigate to `http://localhost:4200/`
+
+#### Back-End
+1. Navigate to the back-end directory: `cd api`
+2. Run the application: `docker compose up -d` (the `-d` flag is optional and runs the application in detached mode)
+3. Send requests to `http://localhost:5000/`
+
+
+## Built With
+- [Angular](https://angular.io/) - Front-end framework
+- [Python](https://www.python.org/) - Back-end language
+- [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Back-end framework
+- [Docker](https://www.docker.com/) - Containerization
+- [Docker Compose](https://docs.docker.com/compose/) - Container orchestration
 
 ## Contributing
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
@@ -51,5 +65,4 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-- [Renault Digital](https://www.renaultdigital.com/) for developing the original application
 - [HACF](https://github.com/hacf-fr/renault-api) for providing the API used to interact with the vehicle's systems

@@ -1,6 +1,6 @@
 from account import init_renault_session, login
-from api.middleware import token_required
-from api.scheduler import planifier_charge, get_planified_tasks_for_user
+from middleware import token_required
+from scheduler import planifier_charge, get_planified_tasks_for_user
 from vehicle import set_vin, charge, get_car_info, sync_charge, get_past_tasks_for_user, air_conditioning
 
 

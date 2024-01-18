@@ -8,7 +8,7 @@ from renault_api.kamereon.enums import ChargeState
 from renault_api.renault_client import RenaultClient
 
 from account import get_password_from_database, get_account_id_from_database
-from api.scheduler import get_planified_tasks_for_user
+from scheduler import get_planified_tasks_for_user
 from database import postgres_db
 
 
