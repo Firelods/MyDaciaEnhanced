@@ -22,3 +22,4 @@ services:
       FLASK_RUN_HOST: 0.0.0.0
     depends_on:
       - db
+    command: ["./wait-for-db.sh", "db", "flask run"]
