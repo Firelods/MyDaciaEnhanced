@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="fi"
+                  name="First Instance" start-page="README.md">
+
+    <toc-element topic="README.md"/>
+    <toc-element topic="CONTRIBUTING.md"/>
+    <toc-element topic="front_README.md"/>
+    <toc-element topic="Back.md"/>
+</instance-profile>
