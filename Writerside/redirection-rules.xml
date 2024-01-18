@@ -14,4 +14,8 @@
         <description>Created after removal of "Overview" from First Instance</description>
         <accepts>Overview.html</accepts>
     </rule>
+    <rule id="867b9dd">
+        <description>Created after removal of "Back" from Documentation</description>
+        <accepts>Back.html</accepts>
+    </rule>
 </rules>
