@@ -1,0 +1,8 @@
+aiohttp==3.8.6
+APScheduler==3.10.4
+cryptography==41.0.5
+Flask_Cors==4.0.0
+Flask[async]==3.0.0
+psycopg2-binary==2.9.9
+PyJWT==2.8.0
+renault_api==0.2.1

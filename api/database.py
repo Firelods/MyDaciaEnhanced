@@ -1,8 +1,8 @@
 import psycopg2
 
 postgres_db = psycopg2.connect(database="mydacia",
-                               host="localhost",
+                               host="db",
                                user="postgres",
-                               password="pns",
+                               password="test123",
                                port="5432")
 

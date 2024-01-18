@@ -124,7 +124,10 @@ def login():
     cursor = postgres_db.cursor()
     postgres_select_query = """ SELECT password FROM mobile_user WHERE login_id = %s"""
     cursor.execute(postgres_select_query, (login_id,))
-    encrypted_password = bytes(cursor.fetchone()[0])
+    try:
+        encrypted_password = bytes(cursor.fetchone()[0])
+    except:
+        return {"message": "Ce compte n'existe pas"}, 400
     print("to decrypt: ", encrypted_password)
     cursor.close()
     password_from_database = cipher_suite.decrypt(encrypted_password).decode()

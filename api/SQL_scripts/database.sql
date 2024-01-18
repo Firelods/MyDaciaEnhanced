@@ -1,4 +1,3 @@
-CREATE DATABASE myDacia WITH OWNER = postgres;
 
 GRANT ALL PRIVILEGES ON DATABASE myDacia TO postgres;
 

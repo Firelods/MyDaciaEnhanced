@@ -3,7 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 import logging
 
-from api.routes import set_up_routes
+from routes import set_up_routes
 
 scheduler = BackgroundScheduler()
 scheduler.start()
