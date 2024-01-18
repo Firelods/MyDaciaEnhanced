@@ -3,7 +3,7 @@
 ## Introduction
 *MyDaciaEnhanced* is a project aimed at enhancing the user experience for Dacia vehicle owners. This repository includes both the front-end and back-end components necessary to deliver a comprehensive solution.
 
-The original application is available on the [Dacia website](https://www.dacia.fr/decouvrez-mydacia.html) and is developed by [Renault Digital](https://www.renaultdigital.com/).
+The original application is available on the [Dacia website](https://www.dacia.fr/decouvrez-mydacia.html) 
 
 ## Benefits
 The main benefits of this project are:
@@ -45,12 +45,11 @@ Explain how to run the automated tests for this system and how to start the appl
 Briefly explain how to use the application, with examples if applicable.
 
 ## Contributing
-Please read [CONTRIBUTING1.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc.
+- [Renault Digital](https://www.renaultdigital.com/) for developing the original application
+- [HACF](https://github.com/hacf-fr/renault-api) for providing the API used to interact with the vehicle's systems

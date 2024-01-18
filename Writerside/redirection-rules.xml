@@ -6,4 +6,12 @@
         <accepts>page.html</accepts>
     </rule>
     -->
+    <rule id="2054c187">
+        <description>Created after removal of "MyDaciaEnhanced" from First Instance</description>
+        <accepts>README.html</accepts>
+    </rule>
+    <rule id="18719828">
+        <description>Created after removal of "Overview" from First Instance</description>
+        <accepts>Overview.html</accepts>
+    </rule>
 </rules>
