@@ -25,4 +25,21 @@ export class UserService {
         }
       });
   }
+
+  init_renault_login(email: string, password: string) {
+    this.http
+      .post<{ message: string; token: string }>(
+        environment.baseUrl + '/init_renault_session',
+        { email, password }
+      )
+      .subscribe((response) => {
+        const token = response.token;
+        console.log(response);
+
+        if (token) {
+          localStorage.setItem('token', token);
+          this.router.navigate(['/']);
+        }
+      });
+  }
 }
