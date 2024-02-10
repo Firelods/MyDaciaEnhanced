@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../../footer/footer.component';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login-page',
