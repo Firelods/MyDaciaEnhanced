@@ -20,3 +20,14 @@ body {
   font-family: "Segoe UI";
   src: url(./assets/font/Segoe\ UI.ttf);
 }
+
+button {
+  border-radius: 5px;
+  background: #41a2b7;
+  border: none;
+  font-weight: 600;
+  font-style: normal;
+  font-family: IBM Plex Mono;
+  padding: 0.2em 0.5em;
+  line-height: normal;
+}

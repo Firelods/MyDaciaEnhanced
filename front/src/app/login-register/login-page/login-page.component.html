@@ -6,7 +6,7 @@
     <input formControlName="password" type="password" name="passwordUser" id="passwordUser">
     <button type="submit">Connexion</button>
   </form>
-  <div class="newUser">
+  <div class="newUser" [routerLink]="['/register']" routerLinkActive="router-link-active">
     <span>Nouvel utilisateur ?</span>
     <button>Inscription</button>
   </div>

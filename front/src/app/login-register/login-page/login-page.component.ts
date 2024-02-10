@@ -8,11 +8,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [FooterComponent, FormsModule, ReactiveFormsModule],
+  imports: [FooterComponent, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
 })
