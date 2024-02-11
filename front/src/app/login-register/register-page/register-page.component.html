@@ -10,13 +10,20 @@
   </form>
   }
   @else if (this.phase === 'chooseVehicle'){
-  <div>
+  <div class="chooseVehicle">
     <p>On a trouvé votre compte !<br>Voici les véhicules disponibles :</p>
-    <select formControlName="vehicle" name="vehicle" id="vehicle">
+    <div class="list">
       @for (vehicle of availableVehicles; track $index) {
-      <div></div>
+      <div (click)="selectVehicle(vehicle)" [className]="selectedVehicle==vehicle?'vehicleList selected':'vehicleList'">
+        <p>{{vehicle.model}}</p>
+        <div class="rightSide">
+          <p class="plate">{{vehicle.licensePlate}}</p>
+          <p class="vin">Vin : {{vehicle.vin}}</p>
+        </div>
+      </div>
       }
-    </select>
+    </div>
+    <button (click)="chooseVehicle()" [disabled]="!selectedVehicle">Choisir ce véhicule</button>
   </div>
   }
   <div class="securised">

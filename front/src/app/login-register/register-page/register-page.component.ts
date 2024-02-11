@@ -22,13 +22,39 @@ export class RegisterPageComponent {
     email: new FormControl(''),
     password: new FormControl(''),
   });
-  phase: string = 'credentials';
+  phase: string = 'chooseVehicle'; //  'credentials';
   availableVehicles: VehicleList[] = [];
-  constructor(private userService: UserService) {}
+  selectedVehicle: VehicleList | null = null;
+  constructor(private userService: UserService) {
+    this.userService
+      .init_renault_login(this.form.value.email, this.form.value.password)
+      .subscribe((vehicles) => {
+        this.availableVehicles = vehicles;
+        this.phase = 'chooseVehicle';
+      });
+  }
 
   submit() {
-    console.log(this.form.value);
+    this.userService
+      .init_renault_login(this.form.value.email, this.form.value.password)
+      .subscribe((vehicles) => {
+        this.availableVehicles = vehicles;
+        this.phase = 'chooseVehicle';
+      });
+  }
 
-    this.userService.login(this.form.value.email, this.form.value.password);
+  chooseVehicle() {
+    if (!this.selectedVehicle) {
+      return;
+    }
+    this.userService.chooseVehicle(this.selectedVehicle.vin);
+  }
+
+  selectVehicle(vehicle: VehicleList) {
+    if (this.selectedVehicle === vehicle) {
+      this.selectedVehicle = null;
+      return;
+    }
+    this.selectedVehicle = vehicle;
   }
 }
