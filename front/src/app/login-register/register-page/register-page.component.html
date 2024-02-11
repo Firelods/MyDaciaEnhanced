@@ -1,0 +1,35 @@
+<div class="mainDiv">
+  <img class="logo" src="../../assets/logoLittle.svg" alt="logo">
+  @if (this.phase === 'credentials'){
+  <form [formGroup]="form" (submit)="submit()">
+    <p>Premièrement, on a besoin de vos identifiants myDacia !</p>
+
+    <input formControlName="email" type="email" name="mailUser" id="mailUser">
+    <input formControlName="password" type="password" name="passwordUser" id="passwordUser">
+    <button type="submit">Inscription</button>
+  </form>
+  }
+  @else if (this.phase === 'chooseVehicle'){
+  <div class="chooseVehicle">
+    <p>On a trouvé votre compte !<br>Voici les véhicules disponibles :</p>
+    <div class="list">
+      @for (vehicle of availableVehicles; track $index) {
+      <div (click)="selectVehicle(vehicle)" [className]="selectedVehicle==vehicle?'vehicleList selected':'vehicleList'">
+        <p>{{vehicle.model}}</p>
+        <div class="rightSide">
+          <p class="plate">{{vehicle.licensePlate}}</p>
+          <p class="vin">Vin : {{vehicle.vin}}</p>
+        </div>
+      </div>
+      }
+    </div>
+    <button (click)="chooseVehicle()" [disabled]="!selectedVehicle">Choisir ce véhicule</button>
+  </div>
+  }
+  <div class="securised">
+    <span>Vos identifiants seront conservés de manière sécurisée, pour plus d'infos, voir sur
+      <a href="#">Github</a>
+    </span>
+  </div>
+</div>
+<app-footer></app-footer>

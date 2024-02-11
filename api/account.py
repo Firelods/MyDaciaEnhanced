@@ -37,17 +37,16 @@ SECRET_KEY = "your-secret-key"  # replace with your secret key
 
 
 async def init_renault_session():
-    if request.json['login_id'] is None:
-        return {"message": "Le login_id n'est pas spécifié"}, 400
-    if request.json['password'] is None:
+    if 'email' not in request.json:
+        return {"message": "Le mail n'est pas spécifié"}, 400
+    if 'password' not in request.json:
         return {"message": "Le mot de passe n'est pas spécifié"}, 400
-    login_id = request.json['login_id']
+    login_id = request.json['email']
     password = request.json['password']
     async with aiohttp.ClientSession() as websession:
         client = RenaultClient(websession=websession, locale="fr_FR")
         await client.session.login(login_id, password)
         account_list = (await client.get_person()).accounts
-        account_id = ""
         # add every accountID in list
         for account in account_list:
             if account.accountType == "MYDACIA":
@@ -70,10 +69,9 @@ async def init_renault_session():
                 token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
                 # Hash password and store it
                 encrypted_password = cipher_suite.encrypt(password.encode())
-                print("encrypted_password: ", encrypted_password)
                 # save in postgresql database
                 cursor = postgres_db.cursor()
-                postgres_insert_query = """ INSERT INTO mobile_user (login_id, password,account_id) VALUES (%s,%s,%s)"""
+                postgres_insert_query = """ INSERT INTO mobile_user (login_id, password, account_id) VALUES (%s,%s,%s)"""
                 record_to_insert = (login_id, encrypted_password, account_id)
                 try:
                     cursor.execute(postgres_insert_query, record_to_insert)

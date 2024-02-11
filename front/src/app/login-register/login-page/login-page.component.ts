@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../../footer/footer.component';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [FooterComponent, FormsModule, ReactiveFormsModule],
+  imports: [FooterComponent, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
 })
