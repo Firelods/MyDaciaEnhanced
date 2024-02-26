@@ -1,0 +1,12 @@
+# Étape de build
+FROM node:18.16-alpine AS build
+WORKDIR /usr/src/app
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Étape de serveur HTTP
+FROM nginx:alpine
+COPY --from=build /usr/src/app/dist/front/browser /usr/share/nginx/html

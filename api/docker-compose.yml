@@ -11,8 +11,8 @@ services:
     ports:
       - "5432:5432"
 
-  web:
-    build: .
+  api:
+    image: clementlefevredocker/mydacia-enhanced-back:latest
     volumes:
       - ./:/code
     ports:
@@ -22,4 +22,9 @@ services:
       FLASK_RUN_HOST: 0.0.0.0
     depends_on:
       - db
-    command: ["./wait-for-db.sh", "db", "flask run"]
+    command: [ "./wait-for-db.sh", "db", "flask run" ]
+
+  angular:
+    image: clementlefevredocker/mydacia-enhanced-front:latest
+    ports:
+      - "8888:80"
