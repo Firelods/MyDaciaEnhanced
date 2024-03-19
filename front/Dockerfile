@@ -8,4 +8,4 @@ RUN npm run build
 
 # Étape de serveur HTTP
 FROM nginx:alpine
-COPY --from=build /usr/src/app/dist/mon-app-angular /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/front/browser /usr/share/nginx/html

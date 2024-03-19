@@ -1,5 +1,5 @@
 import datetime
-
+import logging
 import aiohttp
 import jwt
 from cryptography.fernet import Fernet
@@ -28,8 +28,14 @@ def save_key(key):
 try:
     key = load_key()
 except FileNotFoundError:
-    # If not, generate a new key
+    # If not, generate a new ke
+    logging.info("Clé inconnue, création d'une nouvelle clé")
+
+    
     key = Fernet.generate_key()
+    logging.info("Clé :", key)
+
+    
     save_key(key)
 
 cipher_suite = Fernet(key)
